@@ -3,3 +3,227 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* ── Brand CSS variables ───────────────────────────────────────────────── */
+  :root {
+    --wu-green: #00a708;
+    --wu-dark: #02250a;
+    --wu-orange: #f8921e;
+    --wu-bg: #f8fafc;
+  }
+
+  /* ── Base resets ───────────────────────────────────────────────────────── */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #02250a;
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Heading scale — Montserrat (brand-font) ───────────────────────────── */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .brand-font {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+
+  /* ── Serif utility class — Playfair Display ────────────────────────────── */
+  .serif,
+  .font-serif {
+    font-family: "Playfair Display", serif;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  /* ── Anchor resets ─────────────────────────────────────────────────────── */
+  a {
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+}
+
+@layer components {
+  /* ── Nexus card ─────────────────────────────────────────────────────────── */
+  .nexus-card {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    border-top-width: 3px;
+    border-top-color: transparent;
+  }
+
+  .nexus-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    border-top-color: #00a708;
+  }
+
+  /* ── Filter button ──────────────────────────────────────────────────────── */
+  .filter-btn {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-color: #e2e8f0;
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .filter-btn.active {
+    background-color: #00a708;
+    color: white;
+    border-color: #00a708;
+  }
+
+  /* ── Citation box ───────────────────────────────────────────────────────── */
+  .citation-box {
+    display: none;
+  }
+
+  .citation-box.active {
+    display: block;
+  }
+
+  /* ── CTA button variants ────────────────────────────────────────────────── */
+  .btn-primary {
+    background-color: #00a708;
+    color: white;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition-property: color, background-color;
+    transition-duration: 200ms;
+    box-shadow: 0 4px 14px 0 rgb(0 167 8 / 0.4);
+  }
+
+  .btn-primary:hover {
+    background-color: #02250a;
+  }
+
+  .btn-outline {
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition-property: all;
+    transition-duration: 200ms;
+  }
+
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-dark {
+    border-width: 2px;
+    border-color: #02250a;
+    color: #02250a;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: 100%;
+    transition-property: all;
+    transition-duration: 200ms;
+  }
+
+  .btn-dark:hover {
+    background-color: #02250a;
+    color: white;
+  }
+
+  /* ── Tag / badge chip ───────────────────────────────────────────────────── */
+  .tag-chip {
+    font-size: 0.5625rem;
+    background-color: #f1f5f9;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-radius: 0.25rem;
+    color: #475569;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  /* ── Section label (orange eyebrow) ────────────────────────────────────── */
+  .eyebrow {
+    color: #f8921e;
+    font-weight: 800;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+  }
+
+  /* ── Background gradient utilities ──────────────────────────────────────── */
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, #02250a 0%, #064e3b 100%);
+  }
+}
+
+@layer utilities {
+  /* Custom font size utilities */
+  .text-2xs {
+    font-size: 0.625rem;
+    line-height: 1rem;
+  }
+
+  .text-3xs {
+    font-size: 0.5625rem;
+    line-height: 0.875rem;
+  }
+
+  /* Letter spacing utilities */
+  .tracking-widest-2 {
+    letter-spacing: 0.2em;
+  }
+
+  .tracking-widest-3 {
+    letter-spacing: 0.3em;
+  }
+
+  .tracking-widest-4 {
+    letter-spacing: 0.4em;
+  }
+
+  .tracking-widest-5 {
+    letter-spacing: 0.5em;
+  }
+}

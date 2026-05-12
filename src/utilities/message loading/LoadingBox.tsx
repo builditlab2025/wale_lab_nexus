@@ -1,58 +1,98 @@
-// src/components/common/loading/LoadingBox.tsx
-import loaderImage from "../../assets/logo.svg";
-
 function LoadingBox() {
   return (
     <div
       data-cy="loading-box"
-      className="fixed inset-0 flex justify-center items-center min-h-screen bg-white z-[100]"
+      className="fixed inset-0 flex justify-center items-center min-h-screen bg-slate-50 z-[100]"
     >
-      {/* Minimal geometric pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div className="absolute inset-0 bg-[radial-gradient(#00B140_1px,transparent_1px)] [background-size:32px_32px]"></div>
+      {/* Wale Lab Logo Pattern Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30-30-30z' fill='%2300a708' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "60px 60px",
+          }}
+        ></div>
       </div>
 
-      {/* Soft gradient orbs */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-primary-50 rounded-full filter blur-3xl opacity-70"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-50 rounded-full filter blur-3xl opacity-70"></div>
+      {/* Brand gradient orbs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#00a708]/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#f8921e]/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#02250a]/5 rounded-full blur-3xl"></div>
 
       <div className="relative flex flex-col items-center">
-        {/* Clean loader design */}
-        <div className="relative mb-10">
-          {/* Simple rotating circle - fixed border width */}
-          <div className="w-20 h-20 rounded-full border-4 border-primary-100 border-t-primary-500 animate-spin"></div>
+        {/* Loader design with brand colors */}
+        <div className="relative mb-8">
+          {/* Rotating circle with brand green */}
+          <div className="w-20 h-20 rounded-full border-4 border-[#00a708]/20 border-t-[#00a708] animate-spin"></div>
 
-          {/* Center logo */}
+          {/* Center W logo */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <img
-              src={loaderImage}
-              alt="Wale Lab"
-              className="w-10 h-10 object-contain"
-            />
+            <div className="w-10 h-10 bg-[#02250a] rounded flex items-center justify-center text-white">
+              <span className="font-extrabold text-xl">W</span>
+            </div>
           </div>
         </div>
 
-        {/* Loading text */}
-        <div className="text-center space-y-2">
-          <h2 className="text-xl font-medium text-gray-900">Wale Lab</h2>
+        {/* Loading text with brand */}
+        <div className="text-center space-y-3">
+          <div>
+            <h2 className="text-xl font-extrabold tracking-tighter text-[#02250a]">
+              WALE LAB <span className="text-[#00a708]">NEXUS</span>
+            </h2>
+            <p className="text-[9px] uppercase tracking-[0.3em] text-[#f8921e] font-bold mt-1">
+              Manifold Wisdom
+            </p>
+          </div>
 
-          <div className="flex items-center justify-center space-x-1">
-            <span className="text-gray-400 text-sm">Loading</span>
+          <div className="flex items-center justify-center space-x-2 mt-4">
+            <span className="text-slate-500 text-sm font-medium">Loading</span>
             <div className="flex space-x-1">
-              <div className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-              <div className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-              <div className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-bounce"></div>
+              <div className="w-1.5 h-1.5 bg-[#00a708] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-1.5 h-1.5 bg-[#00a708] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-1.5 h-1.5 bg-[#00a708] rounded-full animate-bounce"></div>
             </div>
           </div>
 
-          <p className="text-gray-400 text-xs">Innovation in progress</p>
+          <p className="text-slate-400 text-2xs font-bold uppercase tracking-widest">
+            Public Evidence Layer
+          </p>
         </div>
 
-        {/* Simple progress indicator */}
-        <div className="mt-8 w-40 h-1 bg-gray-100 rounded-full overflow-hidden">
-          <div className="h-full bg-primary-500 rounded-full animate-loading"></div>
+        {/* Progress indicator with brand colors */}
+        <div className="mt-8 w-48 h-1 bg-slate-200 rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-[#00a708] to-[#f8921e] rounded-full animate-loading"></div>
+        </div>
+
+        {/* Subtle status message */}
+        <div className="mt-6">
+          <p className="text-3xs text-slate-400 font-mono">
+            v2.4 • Institutional Asset
+          </p>
         </div>
       </div>
+
+      {/* Add custom animation for loading bar if not already in global CSS */}
+      <style>{`
+        @keyframes loading {
+          0% {
+            width: 0%;
+            transform: translateX(-100%);
+          }
+          50% {
+            width: 70%;
+            transform: translateX(0%);
+          }
+          100% {
+            width: 100%;
+            transform: translateX(100%);
+          }
+        }
+        .animate-loading {
+          animation: loading 1.5s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
