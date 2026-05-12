@@ -1,19 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Menu, X, LogIn, BookOpen, Rocket, BarChart3 } from "lucide-react";
 
-function Navbar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+interface NavLink {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+}
 
-  const navLinks = [
+const Navbar: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+  const navLinks: NavLink[] = [
     { name: "Catalog", href: "#catalog", icon: BookOpen },
     { name: "R2I Showcase", href: "#r2i", icon: Rocket },
     { name: "Impact", href: "#impact", icon: BarChart3 },
   ];
 
-  const handleLogin = () => {
-    // Simple login action - redirect or show alert
+  const handleLogin = (): void => {
     console.log("Login clicked");
-    window.location.href = "/login"; // or whatever your login route is
+    window.location.href = "/login";
   };
 
   return (
@@ -158,6 +163,6 @@ function Navbar() {
       </div>
     </>
   );
-}
+};
 
 export default Navbar;

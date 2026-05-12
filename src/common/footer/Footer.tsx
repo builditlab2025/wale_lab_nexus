@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BookOpen,
   FileText,
@@ -8,14 +9,26 @@ import {
 } from "lucide-react";
 import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
-function Footer() {
-  const archiveLinks = [
+interface ArchiveLink {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+}
+
+interface ConnectLink {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+}
+
+const Footer: React.FC = () => {
+  const archiveLinks: ArchiveLink[] = [
     { name: "Journal (WJAI)", href: "#", icon: BookOpen },
     { name: "Technical Reports", href: "#", icon: FileText },
     { name: "White Papers", href: "#", icon: FileBadge },
   ];
 
-  const connectLinks = [
+  const connectLinks: ConnectLink[] = [
     { name: "Collaborate", href: "#", icon: Handshake },
     { name: "Submit Output", href: "#", icon: Upload },
     { name: "Wale University", href: "#", icon: University },
@@ -48,12 +61,14 @@ function Footer() {
               <a
                 href="#"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
+                aria-label="LinkedIn"
               >
                 <FaLinkedinIn size={14} />
               </a>
               <a
                 href="#"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
+                aria-label="Twitter"
               >
                 <FaTwitter size={14} />
               </a>
@@ -122,6 +137,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
