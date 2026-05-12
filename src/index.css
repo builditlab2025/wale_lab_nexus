@@ -1,20 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-gray-50 text-gray-900;
-    font-family: "Lexend Deca", Arial, Helvetica, sans-serif;
+  /* ── Google Fonts import ───────────────────────────────────────────────── */
+
+  /* ── Brand CSS variables ───────────────────────────────────────────────── */
+  :root {
+    --wu-green: #00a708;
+    --wu-dark: #02250a;
+    --wu-orange: #f8921e;
+    --wu-bg: #f8fafc;
   }
 
+  /* ── Base resets ───────────────────────────────────────────────────────── */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-bg text-brand-dark antialiased;
+    font-family: "Inter", sans-serif;
+  }
+
+  /* ── Heading scale — Montserrat (brand-font) ───────────────────────────── */
   h1,
   h2,
   h3,
   h4,
   h5,
-  h6 {
-    font-family: "Lexend Deca", Arial, Helvetica, sans-serif;
-    @apply font-semibold tracking-tight;
+  h6,
+  .brand-font {
+    font-family: "Montserrat", sans-serif;
+    @apply font-extrabold tracking-tight;
+  }
+
+  /* ── Serif utility class — Playfair Display ────────────────────────────── */
+  .serif {
+    font-family: "Playfair Display", serif;
+    @apply italic;
+  }
+
+  /* ── Anchor resets ─────────────────────────────────────────────────────── */
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* ── Nexus card ─────────────────────────────────────────────────────────── */
+  .nexus-card {
+    @apply transition-all duration-300 border-t-[3px] border-t-transparent;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nexus-card:hover {
+    @apply -translate-y-1 shadow-card-hover border-t-brand-green;
+  }
+
+  /* ── Filter button ──────────────────────────────────────────────────────── */
+  .filter-btn {
+    @apply transition-all duration-200 px-5 py-2 rounded border border-slate-200
+           text-2xs font-extrabold uppercase tracking-widest;
+  }
+
+  .filter-btn.active {
+    @apply bg-brand-green text-white border-brand-green;
+  }
+
+  /* ── Citation box ───────────────────────────────────────────────────────── */
+  .citation-box {
+    @apply hidden;
+  }
+
+  .citation-box.active {
+    @apply block;
+  }
+
+  /* ── CTA button variants ────────────────────────────────────────────────── */
+  .btn-primary {
+    @apply bg-brand-green hover:bg-brand-dark text-white px-6 py-2.5 rounded
+           text-2xs font-extrabold uppercase tracking-widest
+           transition-colors duration-200 shadow-cta-green;
+  }
+
+  .btn-outline {
+    @apply border border-white/20 hover:bg-white/5 text-white px-8 py-3 rounded
+           text-2xs font-extrabold uppercase tracking-widest
+           transition-colors duration-200;
+  }
+
+  .btn-dark {
+    @apply border-2 border-brand-dark text-brand-dark py-3 rounded
+           text-2xs font-extrabold uppercase tracking-widest w-full
+           hover:bg-brand-dark hover:text-white transition-colors duration-200;
+  }
+
+  /* ── Tag / badge chip ───────────────────────────────────────────────────── */
+  .tag-chip {
+    @apply text-3xs bg-slate-100 px-2 py-1 rounded text-slate-600 font-extrabold uppercase;
+  }
+
+  /* ── Section label (orange eyebrow) ────────────────────────────────────── */
+  .eyebrow {
+    @apply text-brand-orange font-extrabold text-2xs uppercase tracking-widest-5;
+  }
+
+  /* ── Logo pattern overlay ───────────────────────────────────────────────── */
+  .logo-pattern {
+    @apply opacity-5;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30-30-30z' fill='%2300a708' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
   }
 }
