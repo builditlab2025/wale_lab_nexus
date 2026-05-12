@@ -1,6 +1,4 @@
 import {
-  Linkedin,
-  Twitter,
   BookOpen,
   FileText,
   FileBadge,
@@ -8,6 +6,7 @@ import {
   Upload,
   University,
 } from "lucide-react";
+import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 function Footer() {
   const archiveLinks = [
@@ -50,13 +49,13 @@ function Footer() {
                 href="#"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
               >
-                <Linkedin size={16} />
+                <FaLinkedinIn size={14} />
               </a>
               <a
                 href="#"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
               >
-                <Twitter size={16} />
+                <FaTwitter size={14} />
               </a>
             </div>
           </div>
