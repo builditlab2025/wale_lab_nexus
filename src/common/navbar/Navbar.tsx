@@ -1,24 +1,60 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, LogIn, BookOpen, Rocket, BarChart3 } from "lucide-react";
+import logo from "../../assets/logo.png";
 
 interface NavLink {
   name: string;
-  href: string;
+  path: string;
+  hash: string;
   icon: React.ElementType;
 }
 
 const Navbar: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const navLinks: NavLink[] = [
-    { name: "Catalog", href: "#catalog", icon: BookOpen },
-    { name: "R2I Showcase", href: "#r2i", icon: Rocket },
-    { name: "Impact", href: "#impact", icon: BarChart3 },
+    { name: "Catalog", path: "/", hash: "#catalog", icon: BookOpen },
+    { name: "R2I Showcase", path: "/", hash: "#r2i", icon: Rocket },
+    { name: "Impact", path: "/", hash: "#impact", icon: BarChart3 },
   ];
 
   const handleLogin = (): void => {
-    console.log("Login clicked");
-    window.location.href = "/login";
+    navigate("/login");
+  };
+
+  const handleSubmitWork = (): void => {
+    // Navigate to submit work page or open modal
+    console.log("Submit work clicked");
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: NavLink,
+  ) => {
+    e.preventDefault();
+    setIsSidebarOpen(false);
+
+    if (link.path === "/") {
+      // If already on home page, just scroll to hash
+      if (window.location.pathname === "/") {
+        const element = document.querySelector(link.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        // Navigate to home page with hash
+        navigate(`${link.path}${link.hash}`);
+      }
+    } else {
+      navigate(link.path);
+    }
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -27,13 +63,21 @@ const Navbar: React.FC = () => {
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
-            {/* Logo Section */}
-            <div className="flex items-center space-x-3">
-              <div className="relative w-12 h-12 bg-[#02250a] rounded flex items-center justify-center text-white overflow-hidden">
+            {/* Logo Section - Clickable */}
+            <button
+              onClick={handleLogoClick}
+              className="flex items-center space-x-3 cursor-pointer group focus:outline-none"
+              aria-label="Go to home"
+            >
+              <div className="relative w-12 h-12 bg-[#02250a] rounded flex items-center justify-center text-white overflow-hidden transition-transform group-hover:scale-105">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#00a708] to-transparent opacity-50"></div>
-                <span className="relative font-extrabold text-2xl">W</span>
+                <img
+                  src={logo}
+                  alt="Wale Lab Nexus Logo"
+                  className="relative w-8 h-8 object-contain"
+                />
               </div>
-              <div>
+              <div className="text-left">
                 <h1 className="text-xl font-extrabold tracking-tighter text-[#02250a]">
                   WALE LAB <span className="text-[#00a708]">NEXUS</span>
                 </h1>
@@ -41,15 +85,16 @@ const Navbar: React.FC = () => {
                   Manifold Wisdom
                 </p>
               </div>
-            </div>
+            </button>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-wide">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
-                  href={link.href}
-                  className="text-slate-600 hover:text-[#00a708] transition"
+                  href={`${link.path}${link.hash}`}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className="text-slate-600 hover:text-[#00a708] transition cursor-pointer"
                 >
                   {link.name}
                 </a>
@@ -65,7 +110,10 @@ const Navbar: React.FC = () => {
                 <LogIn size={16} />
                 <span>Login</span>
               </button>
-              <button className="bg-[#00a708] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#02250a] transition shadow-lg shadow-green-900/10 uppercase tracking-widest">
+              <button
+                onClick={handleSubmitWork}
+                className="bg-[#00a708] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#02250a] transition shadow-lg shadow-green-900/10 uppercase tracking-widest"
+              >
                 Submit Work
               </button>
             </div>
@@ -74,6 +122,7 @@ const Navbar: React.FC = () => {
             <button
               onClick={() => setIsSidebarOpen(true)}
               className="md:hidden p-2 rounded text-slate-600 hover:bg-slate-100 transition"
+              aria-label="Open menu"
             >
               <Menu size={24} />
             </button>
@@ -105,13 +154,18 @@ const Navbar: React.FC = () => {
           <div className="flex justify-between items-center p-6 border-b border-slate-200">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-[#02250a] rounded flex items-center justify-center text-white">
-                <span className="font-extrabold text-lg">W</span>
+                <img
+                  src={logo}
+                  alt="Wale Lab Nexus Logo"
+                  className="w-5 h-5 object-contain"
+                />
               </div>
               <span className="font-extrabold text-[#02250a]">Menu</span>
             </div>
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="p-2 rounded hover:bg-slate-100 transition"
+              aria-label="Close menu"
             >
               <X size={20} />
             </button>
@@ -124,9 +178,9 @@ const Navbar: React.FC = () => {
               return (
                 <a
                   key={link.name}
-                  href={link.href}
-                  onClick={() => setIsSidebarOpen(false)}
-                  className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group"
+                  href={`${link.path}${link.hash}`}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
                 >
                   <Icon
                     size={20}
@@ -141,13 +195,22 @@ const Navbar: React.FC = () => {
 
             <div className="pt-4 border-t border-slate-200 space-y-3">
               <button
-                onClick={handleLogin}
+                onClick={() => {
+                  handleLogin();
+                  setIsSidebarOpen(false);
+                }}
                 className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded border-2 border-[#00a708] text-[#00a708] font-bold uppercase tracking-widest text-sm hover:bg-[#00a708] hover:text-white transition"
               >
                 <LogIn size={16} />
                 <span>Login</span>
               </button>
-              <button className="w-full bg-[#00a708] text-white px-4 py-3 rounded text-sm font-bold hover:bg-[#02250a] transition uppercase tracking-widest">
+              <button
+                onClick={() => {
+                  handleSubmitWork();
+                  setIsSidebarOpen(false);
+                }}
+                className="w-full bg-[#00a708] text-white px-4 py-3 rounded text-sm font-bold hover:bg-[#02250a] transition uppercase tracking-widest"
+              >
                 Submit Work
               </button>
             </div>
