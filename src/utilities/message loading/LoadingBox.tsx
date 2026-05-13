@@ -1,3 +1,5 @@
+import logo from "../../assets/logo.png";
+
 function LoadingBox() {
   return (
     <div
@@ -27,10 +29,14 @@ function LoadingBox() {
           {/* Rotating circle with brand green */}
           <div className="w-20 h-20 rounded-full border-4 border-[#00a708]/20 border-t-[#00a708] animate-spin"></div>
 
-          {/* Center W logo */}
+          {/* Center logo */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-10 h-10 bg-[#02250a] rounded flex items-center justify-center text-white">
-              <span className="font-extrabold text-xl">W</span>
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img
+                src={logo}
+                alt="Wale Lab Nexus Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
         </div>

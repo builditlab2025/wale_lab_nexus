@@ -197,8 +197,6 @@ const Login: React.FC = () => {
                   </div>
                 </div> */}
 
-                
-
                 <p className="text-center text-xs text-slate-500 font-sans">
                   By signing in, you agree to our{" "}
                   <Link to="/terms" className="text-[#00a708] hover:underline">
@@ -229,7 +227,7 @@ const Login: React.FC = () => {
                 </div>
                 <div>
                   <span className="block text-xl font-bold text-[#f8921e]">
-                   0
+                    0
                   </span>
                   <span className="text-3xs text-slate-500">Prototypes</span>
                 </div>

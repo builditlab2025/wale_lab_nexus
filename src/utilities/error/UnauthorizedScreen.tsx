@@ -9,6 +9,7 @@ import {
   Rocket,
   BarChart3,
 } from "lucide-react";
+import logo from "../../assets/logo.png";
 
 function UnauthorizedScreen() {
   const navigate = useNavigate();
@@ -18,6 +19,11 @@ function UnauthorizedScreen() {
     { name: "R2I Showcase", path: "/#r2i", icon: Rocket },
     { name: "Impact", path: "/#impact", icon: BarChart3 },
   ];
+
+  const handleLogoClick = () => {
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -46,21 +52,29 @@ function UnauthorizedScreen() {
 
         <div className="relative min-h-screen flex items-center justify-center p-6">
           <div className="max-w-2xl w-full">
-            {/* Wale Lab Brand Header */}
+            {/* Wale Lab Brand Header - Clickable */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center space-x-2 mb-4">
-                <div className="w-10 h-10 bg-[#02250a] rounded flex items-center justify-center text-white">
-                  <span className="font-extrabold text-xl">W</span>
+              <button
+                onClick={handleLogoClick}
+                className="inline-flex items-center space-x-2 mb-4 cursor-pointer group hover:opacity-80 transition"
+                aria-label="Go to home"
+              >
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <img
+                    src={logo}
+                    alt="Wale Lab Nexus Logo"
+                    className="w-full h-30 object-contain"
+                  />
                 </div>
                 <div>
-                  <h1 className="text-lg font-extrabold tracking-tighter text-[#02250a]">
+                  <h1 className="text-lg font-extrabold tracking-tighter text-[#02250a] group-hover:text-[#00a708] transition">
                     WALE LAB <span className="text-[#00a708]">NEXUS</span>
                   </h1>
                   <p className="text-[8px] uppercase tracking-[0.3em] text-[#f8921e] font-bold">
                     Public Evidence Layer
                   </p>
                 </div>
-              </div>
+              </button>
             </div>
 
             {/* Main content */}
@@ -142,7 +156,7 @@ function UnauthorizedScreen() {
             </div>
 
             {/* Footer */}
-            <div className="absolute bottom-8 left-0 right-0 text-center">
+            <div className="relative mt-6 left-0 right-0 text-center">
               <p className="text-2xs text-slate-400 font-bold uppercase tracking-widest">
                 © {new Date().getFullYear()} Wale University Lab Nexus. All
                 rights reserved.
