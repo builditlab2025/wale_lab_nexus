@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, LogIn, BookOpen, Rocket, BarChart3 } from "lucide-react";
 import logo from "../../assets/logo.png";
 
@@ -57,6 +57,11 @@ const Navbar: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleSidebarLogoClick = () => {
+    handleLogoClick();
+    setIsSidebarOpen(false);
+  };
+
   return (
     <>
       {/* Top Branding Bar */}
@@ -69,12 +74,12 @@ const Navbar: React.FC = () => {
               className="flex items-center space-x-3 cursor-pointer group focus:outline-none"
               aria-label="Go to home"
             >
-              <div className="relative w-12 h-12 bg-[#02250a] rounded flex items-center justify-center text-white overflow-hidden transition-transform group-hover:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#00a708] to-transparent opacity-50"></div>
+              {/* Logo without green background */}
+              <div className="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
                 <img
                   src={logo}
                   alt="Wale Lab Nexus Logo"
-                  className="relative w-8 h-8 object-contain"
+                  className="w-full min-h-30  object-contain"
                 />
               </div>
               <div className="text-left">
@@ -150,18 +155,24 @@ const Navbar: React.FC = () => {
             isSidebarOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* Sidebar Header */}
+          {/* Sidebar Header - Clickable Logo */}
           <div className="flex justify-between items-center p-6 border-b border-slate-200">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-[#02250a] rounded flex items-center justify-center text-white">
+            <button
+              onClick={handleSidebarLogoClick}
+              className="flex items-center space-x-2 cursor-pointer group focus:outline-none hover:opacity-80 transition"
+              aria-label="Go to home"
+            >
+              <div className="w-8 h-8 flex items-center justify-center">
                 <img
                   src={logo}
                   alt="Wale Lab Nexus Logo"
-                  className="w-5 h-5 object-contain"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <span className="font-extrabold text-[#02250a]">Menu</span>
-            </div>
+              <span className="font-extrabold text-[#02250a] group-hover:text-[#00a708] transition">
+                Menu
+              </span>
+            </button>
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="p-2 rounded hover:bg-slate-100 transition"

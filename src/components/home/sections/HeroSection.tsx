@@ -3,18 +3,18 @@ import { TrendingUp, Microchip, Users } from "lucide-react";
 function HeroSection() {
   const stats = [
     {
-      value: "42",
+      value: "0",
       label: "Publications",
       icon: TrendingUp,
       color: "brand-green",
     },
     {
-      value: "18",
+      value: "0",
       label: "Prototypes",
       icon: Microchip,
       color: "brand-orange",
     },
-    { value: "120k+", label: "Lives Impacted", icon: Users, color: "white" },
+    { value: "0", label: "Lives Impacted", icon: Users, color: "white" },
   ];
 
   return (

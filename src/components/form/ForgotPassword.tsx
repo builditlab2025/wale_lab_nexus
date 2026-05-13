@@ -176,35 +176,6 @@ const ForgotPassword: React.FC = () => {
                 </Link>
               </div>
             </motion.div>
-
-            {/* Research Stats Banner */}
-            <div className="mt-8 text-center">
-              <p className="text-2xs text-slate-400 font-bold uppercase tracking-widest mb-2">
-                Join a community of
-              </p>
-              <div className="flex justify-center gap-8">
-                <div>
-                  <span className="block text-xl font-bold text-[#00a708]">
-                    42+
-                  </span>
-                  <span className="text-3xs text-slate-500">Publications</span>
-                </div>
-                <div>
-                  <span className="block text-xl font-bold text-[#f8921e]">
-                    18+
-                  </span>
-                  <span className="text-3xs text-slate-500">Prototypes</span>
-                </div>
-                <div>
-                  <span className="block text-xl font-bold text-[#02250a]">
-                    120k+
-                  </span>
-                  <span className="text-3xs text-slate-500">
-                    Lives Impacted
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

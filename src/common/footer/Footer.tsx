@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
   FileText,
@@ -8,6 +9,7 @@ import {
   University,
 } from "lucide-react";
 import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import logo from "../../assets/logo.png";
 
 interface ArchiveLink {
   name: string;
@@ -22,51 +24,83 @@ interface ConnectLink {
 }
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
+
   const archiveLinks: ArchiveLink[] = [
-    { name: "Journal (WJAI)", href: "#", icon: BookOpen },
-    { name: "Technical Reports", href: "#", icon: FileText },
-    { name: "White Papers", href: "#", icon: FileBadge },
+    { name: "Journal (WJAI)", href: "/", icon: BookOpen },
+    { name: "Technical Reports", href: "/", icon: FileText },
+    { name: "White Papers", href: "/", icon: FileBadge },
   ];
 
   const connectLinks: ConnectLink[] = [
-    { name: "Collaborate", href: "#", icon: Handshake },
-    { name: "Submit Output", href: "#", icon: Upload },
-    { name: "Wale University", href: "#", icon: University },
+    { name: "Collaborate", href: "/", icon: Handshake },
+    { name: "Submit Output", href: "/", icon: Upload },
+    { name: "Wale University", href: "/", icon: University },
   ];
+
+  const handleLogoClick = () => {
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+    if (href === "/") {
+      navigate("/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate(href);
+    }
+  };
 
   return (
     <footer className="bg-white border-t-8 border-[#02250a] py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Brand Column */}
+          {/* Brand Column - Clickable */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-[#02250a] rounded flex items-center justify-center text-white font-bold">
-                W
+            <button
+              onClick={handleLogoClick}
+              className="flex items-center space-x-3 mb-6 cursor-pointer group focus:outline-none hover:opacity-80 transition"
+              aria-label="Go to home"
+            >
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img
+                  src={logo}
+                  alt="Wale Lab Nexus Logo"
+                  className="w-full min-h-30 object-contain"
+                />
               </div>
-              <div>
-                <h2 className="text-lg font-extrabold text-[#02250a] tracking-tighter uppercase">
+              <div className="text-left">
+                <h2 className="text-lg font-extrabold text-[#02250a] tracking-tighter uppercase group-hover:text-[#00a708] transition">
                   Wale Lab Nexus
                 </h2>
                 <p className="text-[10px] text-[#f8921e] font-bold uppercase tracking-widest">
                   Manifold Wisdom
                 </p>
               </div>
-            </div>
+            </button>
             <p className="text-slate-500 text-sm max-w-sm mb-8 font-medium leading-relaxed">
               The public evidence layer where credibility, impact, and
               intellectual authority are proven.
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
                 aria-label="LinkedIn"
               >
                 <FaLinkedinIn size={14} />
               </a>
               <a
-                href="#"
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
                 aria-label="Twitter"
               >
@@ -87,7 +121,8 @@ const Footer: React.FC = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-[#00a708] transition group"
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-[#00a708] transition group cursor-pointer"
                     >
                       <Icon size={12} className="group-hover:text-[#00a708]" />
                       <span>{link.name}</span>
@@ -110,7 +145,8 @@ const Footer: React.FC = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-[#00a708] transition group"
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-[#00a708] transition group cursor-pointer"
                     >
                       <Icon size={12} className="group-hover:text-[#00a708]" />
                       <span>{link.name}</span>
@@ -124,12 +160,29 @@ const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
-          <p>&copy; 2024 Wale University Lab Nexus. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Wale University Lab Nexus. All
+            rights reserved.
+          </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-[#02250a] transition">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/doi-policy");
+              }}
+              className="hover:text-[#02250a] transition cursor-pointer"
+            >
               DOI Policy
             </a>
-            <a href="#" className="hover:text-[#02250a] transition">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/institutional-terms");
+              }}
+              className="hover:text-[#02250a] transition cursor-pointer"
+            >
               Institutional Terms
             </a>
           </div>

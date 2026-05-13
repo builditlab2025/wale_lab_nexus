@@ -223,19 +223,19 @@ const Login: React.FC = () => {
               <div className="flex justify-center gap-8">
                 <div>
                   <span className="block text-xl font-bold text-[#00a708]">
-                    42+
+                    0
                   </span>
                   <span className="text-3xs text-slate-500">Publications</span>
                 </div>
                 <div>
                   <span className="block text-xl font-bold text-[#f8921e]">
-                    18+
+                   0
                   </span>
                   <span className="text-3xs text-slate-500">Prototypes</span>
                 </div>
                 <div>
                   <span className="block text-xl font-bold text-[#02250a]">
-                    120k+
+                    0
                   </span>
                   <span className="text-3xs text-slate-500">
                     Lives Impacted
