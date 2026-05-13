@@ -52,8 +52,23 @@ export const submitWorkSchema = yup.object({
   description: yup
     .string()
     .required("Description is required")
-    .min(50, "Description must be at least 50 characters")
-    .max(2000, "Description must not exceed 2000 characters"),
+    .test(
+      "word-count",
+      "Description must be at least 200 words (current: ${wordCount} words)",
+      function (value) {
+        if (!value) return false;
+        // Strip HTML tags and count words
+        const plainText = value.replace(/<[^>]*>/g, "");
+        const words = plainText
+          .trim()
+          .split(/\s+/)
+          .filter((word) => word.length > 0);
+        const wordCount = words.length;
+        // Store word count for error message
+        (this.parent as any).descriptionWordCount = wordCount;
+        return wordCount >= 200;
+      },
+    ),
   authors: yup.string().required("Author(s) is required"),
   tags: yup.string().required("At least one tag is required"),
   fileUrl: yup.string().url("Please enter a valid URL"),

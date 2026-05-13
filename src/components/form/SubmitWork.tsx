@@ -18,9 +18,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { toast } from "sonner";
-import { submitWorkSchema } from "../../schema/Index";
 import HeroSection from "../../common/hero/HeroSection";
-import RichTextEditor from "../ui/RichTextEditor";
+import RichTextEditor from "../../components/ui/RichTextEditor";
+import { submitWorkSchema } from "../../schema/Index";
 
 interface SubmitWorkFormValues {
   title: string;
@@ -33,11 +33,13 @@ interface SubmitWorkFormValues {
   institution: string;
   year: number;
   consent: boolean;
+  descriptionWordCount?: number;
 }
 
 const SubmitWork: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
   const navigate = useNavigate();
 
   const workTypes = [
@@ -127,12 +129,23 @@ const SubmitWork: React.FC = () => {
     },
   });
 
-//   const selectedWorkType = workTypes.find(
-//     (type) => type.value === formik.values.type,
-//   );
   const availableCategories = formik.values.type
     ? categories[formik.values.type as keyof typeof categories]
     : [];
+
+  // Handle description change from rich text editor
+  const handleDescriptionChange = (html: string) => {
+    formik.setFieldValue("description", html);
+    formik.setFieldTouched("description", true);
+
+    // Calculate word count from plain text
+    const plainText = html.replace(/<[^>]*>/g, "");
+    const words = plainText
+      .trim()
+      .split(/\s+/)
+      .filter((word) => word.length > 0);
+    setWordCount(words.length);
+  };
 
   if (isSubmitted) {
     return (
@@ -316,37 +329,43 @@ const SubmitWork: React.FC = () => {
                   </motion.div>
                 )}
 
-                {/* Description */}
+                {/* Description - Rich Text Editor */}
                 <div>
                   <label
                     htmlFor="description"
                     className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
                   >
-                    Description *
+                    Description * (Minimum 200 words)
                   </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={5}
+                  <RichTextEditor
                     value={formik.values.description}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#00a708]/20 focus:border-[#00a708] outline-none transition-all duration-200 font-sans resize-vertical ${
-                      formik.touched.description && formik.errors.description
-                        ? "border-red-500"
-                        : "border-slate-200"
-                    }`}
-                    placeholder="Provide a detailed description of your work, methodology, and outcomes..."
+                    onChange={handleDescriptionChange}
+                    placeholder="Write a detailed description of your work, methodology, outcomes, and impact..."
+                    error={formik.errors.description}
+                    touched={formik.touched.description}
+                    disabled={isLoading}
+                    enableImageUpload={false}
+                    enableLink={true}
                   />
+                  <div className="mt-2 flex justify-between items-center">
+                    <p
+                      className={`text-xs font-sans ${
+                        wordCount >= 200 ? "text-green-600" : "text-slate-400"
+                      }`}
+                    >
+                      Word count: {wordCount} / 200 minimum
+                    </p>
+                    {wordCount > 0 && wordCount < 200 && (
+                      <p className="text-xs text-amber-600 font-sans">
+                        Need {200 - wordCount} more words
+                      </p>
+                    )}
+                  </div>
                   {formik.touched.description && formik.errors.description && (
                     <p className="mt-1 text-xs text-red-600 font-sans">
                       {formik.errors.description}
                     </p>
                   )}
-                  <p className="mt-1 text-xs text-slate-400">
-                    Minimum 50 characters. {formik.values.description.length}
-                    /2000
-                  </p>
                 </div>
 
                 {/* Authors */}
