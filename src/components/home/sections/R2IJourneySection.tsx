@@ -67,7 +67,7 @@ const R2IJourneySection: React.FC = () => {
           <h4 className="text-brand-orange font-extrabold text-2xs uppercase tracking-[0.5em] mb-4">
             Our Methodology
           </h4>
-          <h2 className="serif text-3xl md:text-4xl lg:text-5xl italic text-brand-dark">
+          <h2 className="serif text-3xl md:text-4xl lg:text-5xl  text-brand-dark">
             The Research-to-Impact (R2I) Journey
           </h2>
         </div>

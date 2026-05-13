@@ -254,7 +254,7 @@ const ContentGridSection: React.FC<ContentGridSectionProps> = ({
                     <div className="text-brand-orange mb-6">
                       <Quote size={24} />
                     </div>
-                    <h3 className="serif text-xl md:text-2xl mb-4 italic leading-tight">
+                    <h3 className="serif text-xl md:text-2xl mb-4  leading-tight">
                       "{item.quote}"
                     </h3>
                     <p className="text-slate-400 text-xs mb-8 uppercase tracking-widest font-bold">

@@ -34,7 +34,7 @@ function HeroSection() {
             <div className="inline-block px-3 py-1 bg-[#00a708]/20 border border-[#00a708]/30 rounded text-[#00a708] text-xs font-bold uppercase tracking-widest mb-6">
               Institutional Asset v2.4
             </div>
-            <h2 className="font-serif italic text-5xl md:text-7xl mb-6 leading-tight text-white">
+            <h2 className="font-serif  text-5xl md:text-7xl mb-6 leading-tight text-white">
               Credibility, Impact, & <br />
               <span className="text-[#f8921e]">Intellectual Authority.</span>
             </h2>
@@ -68,7 +68,7 @@ function HeroSection() {
               <h4 className="text-[#f8921e] font-bold text-xs uppercase tracking-[0.4em] mb-4">
                 Core Philosophy
               </h4>
-              <p className="font-serif italic text-3xl text-white">
+              <p className="font-serif  text-3xl text-white">
                 "Bridging the gap between ivory tower research and real-world
                 impact through Manifold Wisdom."
               </p>
