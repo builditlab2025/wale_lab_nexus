@@ -13,6 +13,7 @@ import useScrollToTop from "./utilities/scroll to top/ScrollToTop";
 // Screen Imports
 import HomeScreen from "./screens/homescreen/HomeScreen";
 import UnauthorizedScreen from "./utilities/error/UnauthorizedScreen";
+import LoginScreen from "./screens/formscreens/LoginScreen";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +56,9 @@ function App() {
         <Route path="*" element={<ErrorBoundary />} />
         {/* Public Routes */}
         <Route path="/" element={<HomeScreen />} />
+
+        {/* Auth Routes */}
+        <Route path="/login" element={<LoginScreen />} />
       </Routes>
     </div>
   );
