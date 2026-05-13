@@ -25,8 +25,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleSubmitWork = (): void => {
-    // Navigate to submit work page or open modal
-    console.log("Submit work clicked");
+    navigate("/submit-work");
   };
 
   const handleNavClick = (

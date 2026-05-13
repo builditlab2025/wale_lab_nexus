@@ -16,6 +16,7 @@ import UnauthorizedScreen from "./utilities/error/UnauthorizedScreen";
 import LoginScreen from "./screens/formscreens/LoginScreen";
 import ForgotPasswordScreen from "./screens/formscreens/ForgotPasswordScreen";
 import ResetPasswordScreen from "./screens/formscreens/ResetPasswordScreen";
+import SubmitWorkScreen from "./screens/formscreens/SubmitWorkScreen";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,11 +60,11 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<HomeScreen />} />
 
-        {/* Auth Routes */}
+        {/* Form Routes */}
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
         <Route path="/reset-password" element={<ResetPasswordScreen />} />
-      
+        <Route path="/submit-work" element={<SubmitWorkScreen />} />
       </Routes>
     </div>
   );

@@ -33,3 +33,37 @@ export const resetPasswordSchema = yup.object({
     .required("Please confirm your password")
     .oneOf([yup.ref("newPassword")], "Passwords must match"),
 });
+
+// Submit Work schema
+export const submitWorkSchema = yup.object({
+  title: yup
+    .string()
+    .required("Title is required")
+    .min(5, "Title must be at least 5 characters")
+    .max(200, "Title must not exceed 200 characters"),
+  type: yup
+    .string()
+    .oneOf(
+      ["publication", "prototype", "impact"],
+      "Please select a valid work type",
+    )
+    .required("Work type is required"),
+  category: yup.string().required("Category is required"),
+  description: yup
+    .string()
+    .required("Description is required")
+    .min(50, "Description must be at least 50 characters")
+    .max(2000, "Description must not exceed 2000 characters"),
+  authors: yup.string().required("Author(s) is required"),
+  tags: yup.string().required("At least one tag is required"),
+  fileUrl: yup.string().url("Please enter a valid URL"),
+  institution: yup.string(),
+  year: yup
+    .number()
+    .min(1900, "Year must be 1900 or later")
+    .max(
+      new Date().getFullYear(),
+      `Year must be ${new Date().getFullYear()} or earlier`,
+    ),
+  consent: yup.boolean().oneOf([true], "You must agree to the terms to submit"),
+});
