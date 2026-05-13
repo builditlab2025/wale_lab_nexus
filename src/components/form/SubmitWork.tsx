@@ -20,6 +20,7 @@ import {
 import { toast } from "sonner";
 import { submitWorkSchema } from "../../schema/Index";
 import HeroSection from "../../common/hero/HeroSection";
+import RichTextEditor from "../ui/RichTextEditor";
 
 interface SubmitWorkFormValues {
   title: string;
