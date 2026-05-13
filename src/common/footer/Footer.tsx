@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/wale-university"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
