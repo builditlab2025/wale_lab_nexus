@@ -14,6 +14,8 @@ import useScrollToTop from "./utilities/scroll to top/ScrollToTop";
 import HomeScreen from "./screens/homescreen/HomeScreen";
 import UnauthorizedScreen from "./utilities/error/UnauthorizedScreen";
 import LoginScreen from "./screens/formscreens/LoginScreen";
+import ForgotPasswordScreen from "./screens/formscreens/ForgotPasswordScreen";
+import ResetPasswordScreen from "./screens/formscreens/ResetPasswordScreen";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +61,9 @@ function App() {
 
         {/* Auth Routes */}
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
+        <Route path="/reset-password" element={<ResetPasswordScreen />} />
+      
       </Routes>
     </div>
   );
