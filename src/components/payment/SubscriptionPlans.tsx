@@ -71,7 +71,8 @@ const SubscriptionPlans: React.FC = () => {
     },
   ];
 
-  const handleSubscribe = async (_: string) => {
+  const handleSubscribe = async (planId: string) => {
+    setSelectedPlan(planId);
     setIsProcessing(true);
     try {
       // Simulate payment processing
@@ -84,6 +85,7 @@ const SubscriptionPlans: React.FC = () => {
       toast.error("Payment failed. Please try again.");
     } finally {
       setIsProcessing(false);
+      setSelectedPlan(null);
     }
   };
 
@@ -118,6 +120,7 @@ const SubscriptionPlans: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {visiblePlans.map((plan, index) => {
               const Icon = plan.icon;
+              const isSelected = selectedPlan === plan.id;
               return (
                 <motion.div
                   key={plan.id}
@@ -127,7 +130,9 @@ const SubscriptionPlans: React.FC = () => {
                   className={`relative bg-white rounded-2xl shadow-xl border overflow-hidden transition-all duration-300 hover:shadow-2xl ${
                     plan.popular
                       ? "border-[#00a708] scale-105"
-                      : "border-slate-200"
+                      : isSelected
+                        ? "border-[#00a708] ring-2 ring-[#00a708]/20"
+                        : "border-slate-200"
                   }`}
                 >
                   {plan.popular && (
@@ -141,10 +146,20 @@ const SubscriptionPlans: React.FC = () => {
                   <div className="p-8">
                     <div className="flex items-center gap-3 mb-4">
                       <div
-                        className={`p-3 rounded-xl ${plan.popular ? "bg-[#00a708]/10" : "bg-slate-100"}`}
+                        className={`p-3 rounded-xl ${
+                          plan.popular
+                            ? "bg-[#00a708]/10"
+                            : isSelected
+                              ? "bg-[#00a708]/10"
+                              : "bg-slate-100"
+                        }`}
                       >
                         <Icon
-                          className={`w-6 h-6 ${plan.popular ? "text-[#00a708]" : "text-slate-600"}`}
+                          className={`w-6 h-6 ${
+                            plan.popular || isSelected
+                              ? "text-[#00a708]"
+                              : "text-slate-600"
+                          }`}
                         />
                       </div>
                       <h3 className="text-2xl font-bold text-[#02250a]">
@@ -177,7 +192,7 @@ const SubscriptionPlans: React.FC = () => {
                       onClick={() => handleSubscribe(plan.id)}
                       disabled={isProcessing && selectedPlan === plan.id}
                       className={`w-full py-3 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
-                        plan.popular
+                        plan.popular || isSelected
                           ? "bg-[#00a708] text-white hover:bg-[#02250a]"
                           : "border-2 border-[#00a708] text-[#00a708] hover:bg-[#00a708] hover:text-white"
                       }`}

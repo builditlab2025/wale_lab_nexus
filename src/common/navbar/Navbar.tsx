@@ -9,7 +9,6 @@ import {
   BarChart3,
   LayoutDashboard,
   LogOut,
-  User,
   Shield,
 } from "lucide-react";
 import logo from "../../assets/logo.png";
@@ -34,14 +33,10 @@ const Navbar: React.FC = () => {
     isAdmin,
   } = useAppContext();
 
+  // Keep original navLinks unchanged
   const navLinks: NavLink[] = [
-    { name: "Catalog", path: "/catalog", hash: "", icon: BookOpen },
-    {
-      name: "External Access",
-      path: "/external-catalog",
-      hash: "",
-      icon: Rocket,
-    },
+    { name: "Catalog", path: "/", hash: "#catalog", icon: BookOpen },
+    { name: "R2I Showcase", path: "/", hash: "#r2i", icon: Rocket },
     { name: "Impact", path: "/", hash: "#impact", icon: BarChart3 },
   ];
 
@@ -76,14 +71,16 @@ const Navbar: React.FC = () => {
     e.preventDefault();
     setIsSidebarOpen(false);
 
-    if (link.hash) {
+    if (link.path === "/") {
+      // If already on home page, just scroll to hash
       if (window.location.pathname === "/") {
         const element = document.querySelector(link.hash);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
       } else {
-        navigate(`/${link.hash}`);
+        // Navigate to home page with hash
+        navigate(`${link.path}${link.hash}`);
       }
     } else {
       navigate(link.path);
@@ -112,6 +109,7 @@ const Navbar: React.FC = () => {
               className="flex items-center space-x-3 cursor-pointer group focus:outline-none"
               aria-label="Go to home"
             >
+              {/* Logo without green background */}
               <div className="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
                 <img
                   src={logo}
@@ -129,12 +127,12 @@ const Navbar: React.FC = () => {
               </div>
             </button>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - UNCHANGED */}
             <div className="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-wide">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
-                  href={link.hash ? `/${link.hash}` : link.path}
+                  href={`${link.path}${link.hash}`}
                   onClick={(e) => handleNavClick(e, link)}
                   className="text-slate-600 hover:text-[#00a708] transition cursor-pointer"
                 >
@@ -143,10 +141,11 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            {/* Desktop Buttons */}
+            {/* Desktop Buttons - Conditionally show based on auth status */}
             <div className="hidden md:flex items-center space-x-4">
               {isAuthenticated() ? (
                 <>
+                  {/* Dashboard Button */}
                   <button
                     onClick={handleDashboard}
                     className="flex items-center space-x-2 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest bg-[#02250a] text-white hover:bg-[#00a708] transition"
@@ -154,12 +153,16 @@ const Navbar: React.FC = () => {
                     <LayoutDashboard size={16} />
                     <span>Dashboard</span>
                   </button>
+
+                  {/* Submit Work Button */}
                   <button
                     onClick={handleSubmitWork}
                     className="bg-[#00a708] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#02250a] transition shadow-lg shadow-green-900/10 uppercase tracking-widest"
                   >
                     Submit Work
                   </button>
+
+                  {/* Logout Button */}
                   <button
                     onClick={handleLogout}
                     className="flex items-center space-x-2 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition"
@@ -170,6 +173,7 @@ const Navbar: React.FC = () => {
                 </>
               ) : (
                 <>
+                  {/* Login Button - Only show when not authenticated */}
                   <button
                     onClick={handleLogin}
                     className="flex items-center space-x-2 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest border-2 border-[#00a708] text-[#00a708] hover:bg-[#00a708] hover:text-white transition"
@@ -177,6 +181,8 @@ const Navbar: React.FC = () => {
                     <LogIn size={16} />
                     <span>Login</span>
                   </button>
+
+                  {/* Submit Work Button - Always visible */}
                   <button
                     onClick={handleSubmitWork}
                     className="bg-[#00a708] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#02250a] transition shadow-lg shadow-green-900/10 uppercase tracking-widest"
@@ -246,12 +252,14 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* User Info if authenticated */}
+          {/* User Info Section - Only when authenticated */}
           {isAuthenticated() && (
             <div className="p-6 border-b border-slate-200 bg-slate-50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#02250a] rounded-full flex items-center justify-center text-white">
-                  <User size={20} />
+                  <span className="font-bold text-lg">
+                    {getUserRoleName()?.charAt(0) || "U"}
+                  </span>
                 </div>
                 <div>
                   <p className="font-bold text-[#02250a]">
@@ -265,14 +273,14 @@ const Navbar: React.FC = () => {
             </div>
           )}
 
-          {/* Sidebar Navigation */}
+          {/* Sidebar Navigation - UNCHANGED navLinks */}
           <div className="p-6 space-y-4">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <a
                   key={link.name}
-                  href={link.hash ? `/${link.hash}` : link.path}
+                  href={`${link.path}${link.hash}`}
                   onClick={(e) => handleNavClick(e, link)}
                   className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
                 >
@@ -287,13 +295,14 @@ const Navbar: React.FC = () => {
               );
             })}
 
+            {/* Dashboard Link - Only when authenticated */}
             {isAuthenticated() && (
-              <a
+              <button
                 onClick={() => {
                   handleDashboard();
                   setIsSidebarOpen(false);
                 }}
-                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
               >
                 <LayoutDashboard
                   size={20}
@@ -302,89 +311,80 @@ const Navbar: React.FC = () => {
                 <span className="font-bold text-slate-700 group-hover:text-[#00a708]">
                   Dashboard
                 </span>
-              </a>
+              </button>
             )}
 
-            {/* Admin Quick Links */}
+            {/* Admin Quick Link - Only for admin users */}
             {isAdmin() && (
-              <div className="pt-2">
-                <p className="text-2xs text-slate-400 uppercase tracking-wider mb-2 px-3">
-                  Admin
-                </p>
-                <a
-                  href="/admin"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/admin");
-                    setIsSidebarOpen(false);
-                  }}
-                  className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
-                >
-                  <Shield
-                    size={20}
-                    className="text-slate-400 group-hover:text-[#00a708]"
-                  />
-                  <span className="font-bold text-slate-700 group-hover:text-[#00a708]">
-                    Admin Panel
-                  </span>
-                </a>
-              </div>
-            )}
-
-            {/* Editorial Quick Links */}
-            {(isAdmin() || getUserRole() === "editor") && (
-              <a
-                href="/editorial"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/editorial");
+              <button
+                onClick={() => {
+                  navigate("/admin");
                   setIsSidebarOpen(false);
                 }}
-                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
+                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
               >
-                <BookOpen
+                <Shield
                   size={20}
                   className="text-slate-400 group-hover:text-[#00a708]"
                 />
                 <span className="font-bold text-slate-700 group-hover:text-[#00a708]">
-                  Editorial
+                  Admin Panel
                 </span>
-              </a>
+              </button>
             )}
 
             <div className="pt-4 border-t border-slate-200 space-y-3">
               {isAuthenticated() ? (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsSidebarOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded border-2 border-red-500 text-red-500 font-bold uppercase tracking-widest text-sm hover:bg-red-500 hover:text-white transition"
-                >
-                  <LogOut size={16} />
-                  <span>Logout</span>
-                </button>
+                <>
+                  {/* Submit Work Button */}
+                  <button
+                    onClick={() => {
+                      handleSubmitWork();
+                      setIsSidebarOpen(false);
+                    }}
+                    className="w-full bg-[#00a708] text-white px-4 py-3 rounded text-sm font-bold hover:bg-[#02250a] transition uppercase tracking-widest"
+                  >
+                    Submit Work
+                  </button>
+
+                  {/* Logout Button */}
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded border-2 border-red-500 text-red-500 font-bold uppercase tracking-widest text-sm hover:bg-red-500 hover:text-white transition"
+                  >
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                  </button>
+                </>
               ) : (
-                <button
-                  onClick={() => {
-                    handleLogin();
-                    setIsSidebarOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded border-2 border-[#00a708] text-[#00a708] font-bold uppercase tracking-widest text-sm hover:bg-[#00a708] hover:text-white transition"
-                >
-                  <LogIn size={16} />
-                  <span>Login</span>
-                </button>
+                <>
+                  {/* Login Button */}
+                  <button
+                    onClick={() => {
+                      handleLogin();
+                      setIsSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded border-2 border-[#00a708] text-[#00a708] font-bold uppercase tracking-widest text-sm hover:bg-[#00a708] hover:text-white transition"
+                  >
+                    <LogIn size={16} />
+                    <span>Login</span>
+                  </button>
+
+                  {/* Submit Work Button */}
+                  <button
+                    onClick={() => {
+                      handleSubmitWork();
+                      setIsSidebarOpen(false);
+                    }}
+                    className="w-full bg-[#00a708] text-white px-4 py-3 rounded text-sm font-bold hover:bg-[#02250a] transition uppercase tracking-widest"
+                  >
+                    Submit Work
+                  </button>
+                </>
               )}
-              <button
-                onClick={() => {
-                  handleSubmitWork();
-                  setIsSidebarOpen(false);
-                }}
-                className="w-full bg-[#00a708] text-white px-4 py-3 rounded text-sm font-bold hover:bg-[#02250a] transition uppercase tracking-widest"
-              >
-                Submit Work
-              </button>
             </div>
           </div>
 

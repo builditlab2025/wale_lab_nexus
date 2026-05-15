@@ -7,6 +7,7 @@ import {
   Handshake,
   Upload,
   University,
+  ExternalLink,
 } from "lucide-react";
 import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import logo from "../../assets/logo.png";
@@ -15,34 +16,58 @@ interface ArchiveLink {
   name: string;
   href: string;
   icon: React.ElementType;
+  external?: boolean;
 }
 
 interface ConnectLink {
   name: string;
   href: string;
   icon: React.ElementType;
+  external?: boolean;
 }
 
 const Footer: React.FC = () => {
   const navigate = useNavigate();
 
   const archiveLinks: ArchiveLink[] = [
-    { name: "Journal (WJAI)", href: "/catalog?type=journal", icon: BookOpen },
+    {
+      name: "Journal (WJAI)",
+      href: "/catalog?type=journal",
+      icon: BookOpen,
+      external: false,
+    },
     {
       name: "Technical Reports",
       href: "/catalog?type=technical",
       icon: FileText,
+      external: false,
     },
-    { name: "White Papers", href: "/catalog?type=whitepaper", icon: FileBadge },
+    {
+      name: "White Papers",
+      href: "/catalog?type=whitepaper",
+      icon: FileBadge,
+      external: false,
+    },
   ];
 
   const connectLinks: ConnectLink[] = [
-    { name: "Collaborate", href: "/submit-work", icon: Handshake },
-    { name: "Submit Output", href: "/submit-work", icon: Upload },
+    {
+      name: "Collaborate",
+      href: "/submit-work",
+      icon: Handshake,
+      external: false,
+    },
+    {
+      name: "Submit Output",
+      href: "/submit-work",
+      icon: Upload,
+      external: false,
+    },
     {
       name: "Wale University",
       href: "https://wale.university",
       icon: University,
+      external: true,
     },
   ];
 
@@ -54,7 +79,13 @@ const Footer: React.FC = () => {
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
+    external?: boolean,
   ) => {
+    if (external) {
+      // For external links, let the browser handle normally
+      return;
+    }
+
     e.preventDefault();
     if (href === "/") {
       navigate("/");
@@ -79,7 +110,7 @@ const Footer: React.FC = () => {
                 <img
                   src={logo}
                   alt="Wale Lab Nexus Logo"
-                  className="w-full min-h-30 object-contain"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="text-left">
@@ -106,7 +137,7 @@ const Footer: React.FC = () => {
                 <FaLinkedinIn size={14} />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/waleuniversity"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#00a708] hover:border-[#00a708] transition"
@@ -129,7 +160,9 @@ const Footer: React.FC = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
+                      onClick={(e) =>
+                        handleNavClick(e, link.href, link.external)
+                      }
                       className="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-[#00a708] transition group cursor-pointer"
                     >
                       <Icon size={12} className="group-hover:text-[#00a708]" />
@@ -153,11 +186,21 @@ const Footer: React.FC = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      onClick={(e) =>
+                        handleNavClick(e, link.href, link.external)
+                      }
                       className="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-[#00a708] transition group cursor-pointer"
                     >
                       <Icon size={12} className="group-hover:text-[#00a708]" />
                       <span>{link.name}</span>
+                      {link.external && (
+                        <ExternalLink
+                          size={10}
+                          className="opacity-50 group-hover:opacity-100"
+                        />
+                      )}
                     </a>
                   </li>
                 );
@@ -192,6 +235,15 @@ const Footer: React.FC = () => {
               className="hover:text-[#02250a] transition cursor-pointer"
             >
               Institutional Terms
+            </a>
+            <a
+              href="https://wale.university"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#02250a] transition flex items-center gap-1"
+            >
+              Wale University
+              <ExternalLink size={10} />
             </a>
           </div>
         </div>
