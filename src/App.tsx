@@ -8,7 +8,7 @@ import ReactGA from "react-ga4";
 import LoadingBox from "./utilities/message loading/LoadingBox";
 import ErrorBoundary from "./utilities/error/ErrorBoundary";
 import useScrollToTop from "./utilities/scroll to top/ScrollToTop";
-import ProtectedRoute from "./utilities/protectedroute/ProtectedRoute";
+// import ProtectedRoute from "./utilities/protectedroute/ProtectedRoute";
 
 // Screen Imports
 import HomeScreen from "./screens/homescreen/HomeScreen";
@@ -83,9 +83,9 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <UserDashboardScreen />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
         {/* <Route
@@ -103,9 +103,9 @@ function App() {
         <Route
           path="/admin/*"
           element={
-            <ProtectedRoute requireAdmin>
+            // <ProtectedRoute requireAdmin>
               <AdminDashboardScreen />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
 

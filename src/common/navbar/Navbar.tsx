@@ -65,13 +65,7 @@ const Navbar: React.FC = () => {
     e.preventDefault();
     setIsSidebarOpen(false);
 
-    if (link.name === "R2I Showcase" && window.location.pathname === "/") {
-      // Scroll to R2I section on home page
-      const element = document.querySelector("#r2i");
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else if (link.name === "Impact" && window.location.pathname === "/") {
+    if (link.name === "Impact" && window.location.pathname === "/") {
       // Scroll to Impact section on home page
       const element = document.querySelector("#impact");
       if (element) {
