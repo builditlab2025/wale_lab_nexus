@@ -234,6 +234,7 @@ const SubscriptionPlans: React.FC = () => {
                 <span className="text-sm">PayPal</span>
               </div>
             </div>
+            
             <p className="text-xs text-slate-400 mt-4 flex items-center justify-center gap-1">
               <Shield className="w-3 h-3" />
               Your payment information is secure and encrypted
