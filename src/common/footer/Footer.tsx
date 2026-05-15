@@ -27,15 +27,23 @@ const Footer: React.FC = () => {
   const navigate = useNavigate();
 
   const archiveLinks: ArchiveLink[] = [
-    { name: "Journal (WJAI)", href: "/", icon: BookOpen },
-    { name: "Technical Reports", href: "/", icon: FileText },
-    { name: "White Papers", href: "/", icon: FileBadge },
+    { name: "Journal (WJAI)", href: "/catalog?type=journal", icon: BookOpen },
+    {
+      name: "Technical Reports",
+      href: "/catalog?type=technical",
+      icon: FileText,
+    },
+    { name: "White Papers", href: "/catalog?type=whitepaper", icon: FileBadge },
   ];
 
   const connectLinks: ConnectLink[] = [
-    { name: "Collaborate", href: "/", icon: Handshake },
-    { name: "Submit Output", href: "/", icon: Upload },
-    { name: "Wale University", href: "/", icon: University },
+    { name: "Collaborate", href: "/submit-work", icon: Handshake },
+    { name: "Submit Output", href: "/submit-work", icon: Upload },
+    {
+      name: "Wale University",
+      href: "https://wale.university",
+      icon: University,
+    },
   ];
 
   const handleLogoClick = () => {
