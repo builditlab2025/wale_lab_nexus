@@ -17,7 +17,6 @@ import { useAppContext } from "../../custom hooks/Hooks";
 interface NavLink {
   name: string;
   path: string;
-  hash: string;
   icon: React.ElementType;
 }
 
@@ -25,19 +24,14 @@ const Navbar: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const {
-    isAuthenticated,
-    signOut,
-    getUserRole,
-    getUserRoleName,
-    isAdmin,
-  } = useAppContext();
+  const { isAuthenticated, signOut, getUserRole, getUserRoleName, isAdmin } =
+    useAppContext();
 
-  // Keep original navLinks unchanged
+  // navLinks with proper routes - names unchanged
   const navLinks: NavLink[] = [
-    { name: "Catalog", path: "/", hash: "#catalog", icon: BookOpen },
-    { name: "R2I Showcase", path: "/", hash: "#r2i", icon: Rocket },
-    { name: "Impact", path: "/", hash: "#impact", icon: BarChart3 },
+    { name: "Catalog", path: "/catalog", icon: BookOpen },
+    { name: "R2I Showcase", path: "/external-catalog", icon: Rocket },
+    { name: "Impact", path: "/", icon: BarChart3 },
   ];
 
   const handleLogin = (): void => {
@@ -71,18 +65,20 @@ const Navbar: React.FC = () => {
     e.preventDefault();
     setIsSidebarOpen(false);
 
-    if (link.path === "/") {
-      // If already on home page, just scroll to hash
-      if (window.location.pathname === "/") {
-        const element = document.querySelector(link.hash);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      } else {
-        // Navigate to home page with hash
-        navigate(`${link.path}${link.hash}`);
+    if (link.name === "R2I Showcase" && window.location.pathname === "/") {
+      // Scroll to R2I section on home page
+      const element = document.querySelector("#r2i");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else if (link.name === "Impact" && window.location.pathname === "/") {
+      // Scroll to Impact section on home page
+      const element = document.querySelector("#impact");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
+      // Navigate to the path
       navigate(link.path);
     }
   };
@@ -109,7 +105,6 @@ const Navbar: React.FC = () => {
               className="flex items-center space-x-3 cursor-pointer group focus:outline-none"
               aria-label="Go to home"
             >
-              {/* Logo without green background */}
               <div className="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
                 <img
                   src={logo}
@@ -127,12 +122,12 @@ const Navbar: React.FC = () => {
               </div>
             </button>
 
-            {/* Desktop Navigation - UNCHANGED */}
+            {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-wide">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
-                  href={`${link.path}${link.hash}`}
+                  href={link.path}
                   onClick={(e) => handleNavClick(e, link)}
                   className="text-slate-600 hover:text-[#00a708] transition cursor-pointer"
                 >
@@ -141,11 +136,10 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            {/* Desktop Buttons - Conditionally show based on auth status */}
+            {/* Desktop Buttons */}
             <div className="hidden md:flex items-center space-x-4">
               {isAuthenticated() ? (
                 <>
-                  {/* Dashboard Button */}
                   <button
                     onClick={handleDashboard}
                     className="flex items-center space-x-2 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest bg-[#02250a] text-white hover:bg-[#00a708] transition"
@@ -153,16 +147,12 @@ const Navbar: React.FC = () => {
                     <LayoutDashboard size={16} />
                     <span>Dashboard</span>
                   </button>
-
-                  {/* Submit Work Button */}
                   <button
                     onClick={handleSubmitWork}
                     className="bg-[#00a708] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#02250a] transition shadow-lg shadow-green-900/10 uppercase tracking-widest"
                   >
                     Submit Work
                   </button>
-
-                  {/* Logout Button */}
                   <button
                     onClick={handleLogout}
                     className="flex items-center space-x-2 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition"
@@ -173,7 +163,6 @@ const Navbar: React.FC = () => {
                 </>
               ) : (
                 <>
-                  {/* Login Button - Only show when not authenticated */}
                   <button
                     onClick={handleLogin}
                     className="flex items-center space-x-2 px-4 py-2.5 rounded text-sm font-bold uppercase tracking-widest border-2 border-[#00a708] text-[#00a708] hover:bg-[#00a708] hover:text-white transition"
@@ -181,8 +170,6 @@ const Navbar: React.FC = () => {
                     <LogIn size={16} />
                     <span>Login</span>
                   </button>
-
-                  {/* Submit Work Button - Always visible */}
                   <button
                     onClick={handleSubmitWork}
                     className="bg-[#00a708] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#02250a] transition shadow-lg shadow-green-900/10 uppercase tracking-widest"
@@ -211,7 +198,6 @@ const Navbar: React.FC = () => {
           isSidebarOpen ? "visible" : "invisible"
         }`}
       >
-        {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black transition-opacity duration-300 ${
             isSidebarOpen ? "opacity-50" : "opacity-0"
@@ -219,13 +205,12 @@ const Navbar: React.FC = () => {
           onClick={() => setIsSidebarOpen(false)}
         ></div>
 
-        {/* Sidebar Panel */}
         <div
           className={`absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transition-transform duration-300 transform ${
             isSidebarOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* Sidebar Header - Clickable Logo */}
+          {/* Sidebar Header */}
           <div className="flex justify-between items-center p-6 border-b border-slate-200">
             <button
               onClick={handleSidebarLogoClick}
@@ -252,7 +237,7 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* User Info Section - Only when authenticated */}
+          {/* User Info Section */}
           {isAuthenticated() && (
             <div className="p-6 border-b border-slate-200 bg-slate-50">
               <div className="flex items-center gap-3">
@@ -273,14 +258,14 @@ const Navbar: React.FC = () => {
             </div>
           )}
 
-          {/* Sidebar Navigation - UNCHANGED navLinks */}
+          {/* Sidebar Navigation */}
           <div className="p-6 space-y-4">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <a
                   key={link.name}
-                  href={`${link.path}${link.hash}`}
+                  href={link.path}
                   onClick={(e) => handleNavClick(e, link)}
                   className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 transition group cursor-pointer"
                 >
@@ -295,7 +280,7 @@ const Navbar: React.FC = () => {
               );
             })}
 
-            {/* Dashboard Link - Only when authenticated */}
+            {/* Dashboard Link */}
             {isAuthenticated() && (
               <button
                 onClick={() => {
@@ -314,7 +299,7 @@ const Navbar: React.FC = () => {
               </button>
             )}
 
-            {/* Admin Quick Link - Only for admin users */}
+            {/* Admin Quick Link */}
             {isAdmin() && (
               <button
                 onClick={() => {
@@ -336,7 +321,6 @@ const Navbar: React.FC = () => {
             <div className="pt-4 border-t border-slate-200 space-y-3">
               {isAuthenticated() ? (
                 <>
-                  {/* Submit Work Button */}
                   <button
                     onClick={() => {
                       handleSubmitWork();
@@ -346,8 +330,6 @@ const Navbar: React.FC = () => {
                   >
                     Submit Work
                   </button>
-
-                  {/* Logout Button */}
                   <button
                     onClick={() => {
                       handleLogout();
@@ -361,7 +343,6 @@ const Navbar: React.FC = () => {
                 </>
               ) : (
                 <>
-                  {/* Login Button */}
                   <button
                     onClick={() => {
                       handleLogin();
@@ -372,8 +353,6 @@ const Navbar: React.FC = () => {
                     <LogIn size={16} />
                     <span>Login</span>
                   </button>
-
-                  {/* Submit Work Button */}
                   <button
                     onClick={() => {
                       handleSubmitWork();
@@ -388,7 +367,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Sidebar Footer Info */}
+          {/* Sidebar Footer */}
           <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-slate-200 bg-slate-50">
             <p className="text-xs text-slate-500 text-center">
               © {new Date().getFullYear()} Wale Lab Nexus
