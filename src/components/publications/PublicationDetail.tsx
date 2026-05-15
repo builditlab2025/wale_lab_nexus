@@ -4,14 +4,10 @@ import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Download,
-  Eye,
   Calendar,
   User,
-  Tag,
   BookOpen,
-  FileText,
   Lock,
-  Unlock,
   Share2,
   Bookmark,
   Copy,
@@ -28,7 +24,6 @@ const PublicationDetail: React.FC<PublicationDetailProps> = ({
 }) => {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
   const [publication, setPublication] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -36,7 +31,7 @@ const PublicationDetail: React.FC<PublicationDetailProps> = ({
   useEffect(() => {
     // Check authentication
     const auth = localStorage.getItem("isAuthenticated") === "true";
-    setIsAuthenticated(auth);
+    // setIsAuthenticated(auth);
     setHasAccess(auth); // Internal users have access
 
     // Fetch publication data
